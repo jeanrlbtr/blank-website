@@ -1,20 +1,21 @@
-import path from 'path'
+import path from 'path';
 
-import { payloadCloud } from '@payloadcms/plugin-cloud'
-import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-import
-import { webpackBundler } from '@payloadcms/bundler-webpack' // bundler-import
-import { slateEditor } from '@payloadcms/richtext-slate' // editor-import
-import { buildConfig } from 'payload/config'
+import { payloadCloud } from '@payloadcms/plugin-cloud';
+import { mongooseAdapter } from '@payloadcms/db-mongodb'; // database-adapter-import
+import { webpackBundler } from '@payloadcms/bundler-webpack'; // bundler-import
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { buildConfig } from 'payload/config';
 
-import Users from './collections/Users'
+import Users from './collections/Users';
+import Pages from './collections/FormData';
 
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(), // bundler-config
   },
-  editor: slateEditor({}), // editor-config
-  collections: [Users],
+  editor: lexicalEditor({}), // editor-config
+  collections: [Users, Pages],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
@@ -27,4 +28,4 @@ export default buildConfig({
     url: process.env.DATABASE_URI,
   }),
   // database-adapter-config-end
-})
+});
